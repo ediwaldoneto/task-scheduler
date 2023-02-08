@@ -8,6 +8,7 @@ public class Schedule {
     private String url;
     private LocalDateTime scheduledTime;
     private boolean active;
+    private String taskName;
 
     public Long getId() {
         return id;
@@ -40,4 +41,14 @@ public class Schedule {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	
 }

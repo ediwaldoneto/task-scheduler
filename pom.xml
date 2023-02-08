@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.nt</groupId>
 	<artifactId>task-scheduler</artifactId>
@@ -40,7 +40,6 @@
 			<artifactId>HikariCP</artifactId>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -49,5 +48,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
