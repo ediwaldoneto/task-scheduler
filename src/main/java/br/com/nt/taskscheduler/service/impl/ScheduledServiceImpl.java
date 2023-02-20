@@ -1,6 +1,7 @@
 package br.com.nt.taskscheduler.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.nt.taskscheduler.model.Schedule;
+import br.com.nt.taskscheduler.model.SchedulerLogs;
 import br.com.nt.taskscheduler.repository.impl.ScheduledRepositoryImpl;
 import br.com.nt.taskscheduler.service.ScheduledService;
 
@@ -27,25 +29,44 @@ public class ScheduledServiceImpl implements ScheduledService {
 		this.restTemplate = restTemplate;
 	}
 
+	@Autowired
+	private SchedulerLogsServiceImpl logsServiceImpl;
+
 	@Override
 	public void executeScheduled() {
 
 		final Logger LOG = LoggerFactory.getLogger(ScheduledServiceImpl.class);
 
+		SchedulerLogs schedulerLogs = new SchedulerLogs();
 		List<Schedule> schedule = scheduledRepository.findAllTasksToBeExecuted();
+		String error = null;
+
 		for (Schedule task : schedule) {
 			try {
+
 				Calendar calendar = Calendar.getInstance();
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+				schedulerLogs.setTaskName(task.getTaskName());
+				schedulerLogs.setExecution(LocalDateTime.now());
 
 				if (sdf.format(calendar.getTime()).equals(task.getScheduledTime().toLocalTime().toString())) {
-					// restTemplate.getForObject(task.getUrl(), String.class);
 					restTemplate.postForObject(task.getUrl(), task, Schedule.class);
 					LOG.info("task successfully executed for the service {}", task.getTaskName());
+				}else {
+					continue;
 				}
 			} catch (Exception e) {
 				LOG.info("An error occurred while running the service {}", task.getTaskName());
-				LOG.info(e.getMessage());
+				error = e.getLocalizedMessage();
+
+				schedulerLogs.setErrorMessage(e.getMessage());
+			} finally {
+				if (error == null) {
+					schedulerLogs.setSuccess(true);
+				} else {
+					schedulerLogs.setSuccess(false);
+				}
+				logsServiceImpl.save(schedulerLogs);
 			}
 		}
 

@@ -12,27 +12,35 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfig {
 
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
+	@Value("${spring.datasource.url}")
+	private String dbUrl;
 
-    @Value("${spring.datasource.username}")
-    private String dbUsername;
+	@Value("${spring.datasource.username}")
+	private String dbUsername;
 
-    @Value("${spring.datasource.password}")
-    private String dbPassword;
+	@Value("${spring.datasource.password}")
+	private String dbPassword;
 
-    @Bean
-    public DataSource dataSource() {
-        HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(dbUrl);
-        config.setUsername(dbUsername);
-        config.setPassword(dbPassword);
-        return new HikariDataSource(config);
-    }
+	@Value("${spring.datasource.poolSize}")
+	private int maximumPoolSize;
 
-    @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
-    
+	@Value("${spring.datasource.timeout}")
+	private Long timeOut;
+
+	@Bean
+	public DataSource dataSource() {
+		HikariConfig config = new HikariConfig();
+		config.setJdbcUrl(dbUrl);
+		config.setUsername(dbUsername);
+		config.setPassword(dbPassword);
+		config.setMaximumPoolSize(maximumPoolSize);
+		config.setConnectionTimeout(timeOut);
+		return new HikariDataSource(config);
+	}
+
+	@Bean
+	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+		return new JdbcTemplate(dataSource);
+	}
+
 }

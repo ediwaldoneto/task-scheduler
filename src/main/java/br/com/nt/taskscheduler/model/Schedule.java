@@ -4,51 +4,80 @@ import java.time.LocalDateTime;
 
 public class Schedule {
 
-    private Long id;
-    private String url;
-    private LocalDateTime scheduledTime;
-    private boolean active;
-    private String taskName;
+	private Long id;
+	private String url;
+	private LocalDateTime scheduledTime;
+	private boolean active;
+	private String taskName;
 
-    public Long getId() {
-        return id;
-    }
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public LocalDateTime getScheduledTime() {
-        return scheduledTime;
-    }
+	/**
+	 * @return the scheduledTime
+	 */
+	public LocalDateTime getScheduledTime() {
+		return scheduledTime;
+	}
 
-    public void setScheduledTime(LocalDateTime scheduledTime) {
-        this.scheduledTime = scheduledTime;
-    }
+	/**
+	 * @param scheduledTime the scheduledTime to set
+	 */
+	public void setScheduledTime(LocalDateTime scheduledTime) {
+		this.scheduledTime = scheduledTime;
+	}
 
-    public boolean isActive() {
-        return active;
-    }
+	/**
+	 * @return the active
+	 */
+	public boolean isActive() {
+		return active;
+	}
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+	/**
+	 * @param active the active to set
+	 */
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
+	/**
+	 * @return the taskName
+	 */
 	public String getTaskName() {
 		return taskName;
 	}
 
+	/**
+	 * @param taskName the taskName to set
+	 */
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
 	}
 
-	
 }
