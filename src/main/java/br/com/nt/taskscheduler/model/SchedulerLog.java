@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * @author Neto
  *
  */
-public class SchedulerLogs {
+public class SchedulerLog {
 
 	private String taskName;
 	private LocalDateTime execution;

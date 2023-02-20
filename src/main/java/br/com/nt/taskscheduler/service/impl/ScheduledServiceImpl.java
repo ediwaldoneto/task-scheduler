@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.nt.taskscheduler.model.Schedule;
-import br.com.nt.taskscheduler.model.SchedulerLogs;
+import br.com.nt.taskscheduler.model.SchedulerLog;
 import br.com.nt.taskscheduler.repository.impl.ScheduledRepositoryImpl;
 import br.com.nt.taskscheduler.service.ScheduledService;
 
@@ -30,43 +30,42 @@ public class ScheduledServiceImpl implements ScheduledService {
 	}
 
 	@Autowired
-	private SchedulerLogsServiceImpl logsServiceImpl;
+	private SchedulerLogServiceImpl logsServiceImpl;
 
 	@Override
 	public void executeScheduled() {
 
 		final Logger LOG = LoggerFactory.getLogger(ScheduledServiceImpl.class);
 
-		SchedulerLogs schedulerLogs = new SchedulerLogs();
 		List<Schedule> schedule = scheduledRepository.findAllTasksToBeExecuted();
 		String error = null;
 
 		for (Schedule task : schedule) {
+			SchedulerLog schedulerLog = new SchedulerLog();
 			try {
 
 				Calendar calendar = Calendar.getInstance();
 				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-				schedulerLogs.setTaskName(task.getTaskName());
-				schedulerLogs.setExecution(LocalDateTime.now());
+				schedulerLog.setTaskName(task.getTaskName());
+				schedulerLog.setExecution(LocalDateTime.now());
 
 				if (sdf.format(calendar.getTime()).equals(task.getScheduledTime().toLocalTime().toString())) {
 					restTemplate.postForObject(task.getUrl(), task, Schedule.class);
 					LOG.info("task successfully executed for the service {}", task.getTaskName());
-				}else {
+				} else {
 					continue;
 				}
 			} catch (Exception e) {
 				LOG.info("An error occurred while running the service {}", task.getTaskName());
 				error = e.getLocalizedMessage();
-
-				schedulerLogs.setErrorMessage(e.getMessage());
+				schedulerLog.setErrorMessage(e.getMessage());
 			} finally {
 				if (error == null) {
-					schedulerLogs.setSuccess(true);
+					schedulerLog.setSuccess(true);
 				} else {
-					schedulerLogs.setSuccess(false);
+					schedulerLog.setSuccess(false);
 				}
-				logsServiceImpl.save(schedulerLogs);
+				logsServiceImpl.save(schedulerLog);
 			}
 		}
 

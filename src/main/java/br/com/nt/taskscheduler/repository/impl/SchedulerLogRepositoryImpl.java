@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import br.com.nt.taskscheduler.model.SchedulerLogs;
+import br.com.nt.taskscheduler.model.SchedulerLog;
 import br.com.nt.taskscheduler.repository.SchedulerLogsRepository;
 
 /**
@@ -15,13 +15,13 @@ import br.com.nt.taskscheduler.repository.SchedulerLogsRepository;
  *
  */
 @Repository
-public class SchedulerLogsRepositoryImpl implements SchedulerLogsRepository {
+public class SchedulerLogRepositoryImpl implements SchedulerLogsRepository {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public void insert(SchedulerLogs schedulerLogs) {
+	public void insert(SchedulerLog schedulerLogs) {
 		//MapSqlParameterSource param = ObjectToMapConverter.convert(schedulerLogs);
 		jdbcTemplate.update("INSERT INTO logs (taskName, execution, success, errorMessage) VALUES (?, ?, ?, ?)",
                 schedulerLogs.getTaskName(), schedulerLogs.getExecution(), schedulerLogs.getSuccess(), schedulerLogs.getErrorMessage());

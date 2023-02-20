@@ -3,7 +3,7 @@
  */
 package br.com.nt.taskscheduler.repository;
 
-import br.com.nt.taskscheduler.model.SchedulerLogs;
+import br.com.nt.taskscheduler.model.SchedulerLog;
 
 /**
  * @author Neto
@@ -11,5 +11,5 @@ import br.com.nt.taskscheduler.model.SchedulerLogs;
  */
 public interface SchedulerLogsRepository {
 
-	public void insert(SchedulerLogs schedulerLogs);
+	public void insert(SchedulerLog schedulerLogs);
 }
