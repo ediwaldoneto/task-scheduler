@@ -9,7 +9,7 @@ import br.com.nt.taskscheduler.model.SchedulerLog;
  * @author Neto
  *
  */
-public interface SchedulerLogsRepository {
+public interface SchedulerLogRepository {
 
 	public void insert(SchedulerLog schedulerLogs);
 }

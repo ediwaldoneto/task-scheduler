@@ -8,14 +8,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import br.com.nt.taskscheduler.model.SchedulerLog;
-import br.com.nt.taskscheduler.repository.SchedulerLogsRepository;
+import br.com.nt.taskscheduler.repository.SchedulerLogRepository;
 
 /**
  * @author Neto
  *
  */
 @Repository
-public class SchedulerLogRepositoryImpl implements SchedulerLogsRepository {
+public class SchedulerLogRepositoryImpl implements SchedulerLogRepository {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
